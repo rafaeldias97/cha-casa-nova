@@ -1,101 +1,137 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import React, { useState } from 'react';
+import { Gift, Heart, ShoppingCart, Calendar, ExternalLink } from 'lucide-react';
+
+const ListaPresentes = () => {
+  const [itens, setItens] = useState([
+    // { 
+    //   id: 1, 
+    //   nome: 'Jogo de Panelas',
+    //   preco: 299.90, 
+    //   categoria: 'Cozinha', 
+    //   reservado: false,
+    //   imagem: '/api/placeholder/400/300',
+    //   link: '#'
+    // }
+  ]);
+
+  const [filtroCategoria, setFiltroCategoria] = useState('Todos');
+  const categorias = ['Todos', 'Cozinha', 'Banheiro', 'Eletrodomésticos', 'Quarto', 'Decoração', 'outros'];
+
+  const reservarPresente = (id) => {
+    setItens(itens.map(item => 
+      item.id === id ? { ...item, reservado: !item.reservado } : item
+    ));
+  };
+
+  const itensFiltrados = filtroCategoria === 'Todos' 
+    ? itens 
+    : itens.filter(item => item.categoria === filtroCategoria);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+      <div className="relative h-96 bg-pink-100 overflow-hidden">
+        <div className="absolute inset-0 bg-pink-900/20 z-10" />
+        <img 
+          src="/casal.jpeg" 
+          alt="Foto do Casal" 
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="relative z-20 h-full flex flex-col items-center justify-center text-pink-300 p-8">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+            Rafael & Caroline
+          </h1>
+          <p className="text-xl mb-4 text-center">Nosso Chá de Casa Nova</p>
+          <div className="flex items-center gap-2 text-lg">
+            <Calendar className="w-5 h-5" />
+            <span>15 de Fevereiro de 2025</span>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-pink-950 mb-4">Lista de Presentes</h2>
+          <p className="text-pink-700 max-w-2xl mx-auto">
+            Agradecemos imensamente sua presença em nosso chá de casa nova. 
+            Se desejar nos presentear, selecionamos alguns itens que serão muito especiais em nosso novo lar.
+            <br />
+            <Heart className="w-6 h-6 text-pink-600 inline-block" />
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-8 justify-center">
+          {categorias.map(categoria => (
+            <button
+              key={categoria}
+              onClick={() => setFiltroCategoria(categoria)}
+              className={`
+                px-4 py-2 rounded-full transition-colors
+                ${filtroCategoria === categoria 
+                  ? 'bg-pink-600 text-white'
+                  : 'bg-white border border-pink-200 text-pink-600 hover:bg-pink-50'}
+              `}
+            >
+              {categoria}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {itensFiltrados.map(item => (
+            <div key={item.id} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img 
+                  src={item.imagem} 
+                  alt={item.nome}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="font-semibold text-lg text-pink-950">{item.nome}</h3>
+                  <span className="px-2 py-1 rounded-full text-sm bg-pink-50 text-pink-700">
+                    {item.categoria}
+                  </span>
+                </div>
+                <p className="text-xl font-bold text-pink-600 mb-4">
+                  R$ {item.preco.toFixed(2)}
+                </p>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => reservarPresente(item.id)}
+                    className={`
+                      flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full transition-colors
+                      ${item.reservado 
+                        ? 'bg-pink-50 text-pink-600 hover:bg-pink-100' 
+                        : 'bg-pink-600 text-white hover:bg-pink-700'}
+                    `}
+                  >
+                    {item.reservado ? (
+                      <>
+                        <Heart className="w-4 h-4" /> Reservado
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCart className="w-4 h-4" /> Reservar
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => window.open(item.link, '_blank')}
+                    className="p-2 rounded-full border border-pink-200 hover:bg-pink-50"
+                  >
+                    <ExternalLink className="w-4 h-4 text-pink-600" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default ListaPresentes;
